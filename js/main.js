@@ -1,32 +1,3 @@
-//Вспом. функция - сверяет длину строки с максимально возможным значением
-let getStrMaxLength = function (str, strMaxLength) {
-  return str.length <= strMaxLength;
-}
-
-//Вспом. функция - возвращает случайное целое число из звдвнного диапазона
-function getRandomIntInclusive(min, max) {
-  if (min >= max) {
-    alert('Задан неверный диапазон');
-    return;
-  }
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-//Вспом. функция, возвращающая массив чисел, перемешанных случайным образом
-const randomIntNonRepeat = function(int) {
-  let arr = [];
-  j = 1;
-  for (let i = 1; i <= int; i++) {
-    arr.push(j++);
-  }
-  arr.sort(function(){
-    return Math.random() - 0.5;
-  });
-  return arr;
-}
-
 //Массив имен
 const NAMES = [
   'Артём',
@@ -63,14 +34,46 @@ const DESCRIPTIONS = [
   'Время перемен',
 ]
 
+const SIMILAR_DESCRIPTION_PHOTO = 25;
+
+//Вспом. функция - сверяет длину строки с максимально возможным значением
+/*let getStrMaxLength = function (str, strMaxLength) {
+  return str.length <= strMaxLength;
+}*/
+
+//Вспом. функция - возвращает случайное целое число из заданного диапазона
+function getRandomIntInclusive(min, max) {
+  if (min >= max) {
+    alert('Задан неверный диапазон');
+    return;
+  }
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+//Вспом. функция, возвращающая массив чисел, перемешанных случайным образом
+/*const randomIntNonRepeat = function(int) {
+  let arr = [];
+  j = 1;
+  for (let i = 1; i <= int; i++) {
+    arr.push(j++);
+  }
+  arr.sort(function(){
+    return Math.random() - 0.5;
+  });
+  return j;
+}*/
+
 const getRandomArrayElement = (elements) => {
   return elements[getRandomIntInclusive(0, elements.length-1)];
 }
 
 //Создание объекта - комментария
-createCommentFoto = () => {
+const createCommentPhoto = (i) => {
+  const j = i+1;
   return {
-    id: randomIntNonRepeat(10),
+    id: j,
     avatar: 'img/avatar-' + getRandomIntInclusive(1, 6) + '.svg',
     message: getRandomArrayElement(CHITS),
     names: getRandomArrayElement(NAMES),
@@ -78,24 +81,21 @@ createCommentFoto = () => {
 }
 
 //Создание массива объектов - комментариев
-const similarCommentFoto = new Array(getRandomIntInclusive(2, 7)).fill(null).map(() => createCommentFoto());
+const similarCommentPhoto = new Array(getRandomIntInclusive(2, 7)).fill(null).map((_, i) => createCommentPhoto(i));
 
 //Создание объекта - описания к фотографии
-const createDescriptionFoto = () => {
+const createDescriptionPhoto = (i) => {
+  const j = i+1;
   return {
-    id: '',
-    url: '',
+    id: j,
+    url: 'photos/' + j + '.jpg',
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomIntInclusive(15, 200),
-    comments: similarCommentFoto,
+    comments: similarCommentPhoto,
   }
 }
 
 //Создание массива объектов - описаний к фотографиям
-const SimilarDescriptionFoto = new Array(25).fill(null).map(() => createDescriptionFoto());
+const similarDescriptionPhoto = new Array(SIMILAR_DESCRIPTION_PHOTO).fill(null).map((_, i) => createDescriptionPhoto(i));
 
-console.log(SimilarDescriptionFoto);
-
-console.log(
-  randomIntNonRepeat(10)
-);
+similarDescriptionPhoto();
