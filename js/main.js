@@ -34,8 +34,6 @@ const DESCRIPTIONS = [
   'Время перемен',
 ]
 
-const SIMILAR_DESCRIPTION_PHOTO = 25;
-
 //Вспом. функция - сверяет длину строки с максимально возможным значением
 /*let getStrMaxLength = function (str, strMaxLength) {
   return str.length <= strMaxLength;
@@ -70,32 +68,38 @@ const getRandomArrayElement = (elements) => {
 }
 
 //Создание объекта - комментария
-const createCommentPhoto = (i) => {
-  const j = i+1;
-  return {
-    id: j,
-    avatar: 'img/avatar-' + getRandomIntInclusive(1, 6) + '.svg',
-    message: getRandomArrayElement(CHITS),
-    names: getRandomArrayElement(NAMES),
-  }
-}
+const createCommentPhoto = (i) => ({
+  id: i+1,
+  avatar: 'img/avatar-' + getRandomIntInclusive(1, 6) + '.svg',
+  message: getRandomArrayElement(CHITS),
+  names: getRandomArrayElement(NAMES),
+})
 
-//Создание массива объектов - комментариев
-const similarCommentPhoto = new Array(getRandomIntInclusive(2, 7)).fill(null).map((_, i) => createCommentPhoto(i));
+const getComments = function(quantityObjects) {
+  let comments = [];
+  for (let i = 0; i < quantityObjects; i++ ) {
+    const newComment = createCommentPhoto(i);
+    comments.push(newComment);
+  }
+  return comments;
+}
 
 //Создание объекта - описания к фотографии
-const createDescriptionPhoto = (i) => {
-  const j = i+1;
-  return {
-    id: j,
-    url: 'photos/' + j + '.jpg',
-    description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomIntInclusive(15, 200),
-    comments: similarCommentPhoto,
+const createDescriptionPhoto = (i) => ({
+  id: i+1,
+  url: `photos/${i+1}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomIntInclusive(15, 200),
+  comments: getComments(getRandomIntInclusive(3, 7)),
+})
+
+const getPhotoDescriptions = function(quantityObjects) {
+  let photoDescriptions = [];
+  for (let i = 0; i < quantityObjects; i++ ) {
+    const newDescription = createDescriptionPhoto(i);
+    photoDescriptions.push(newDescription);
   }
+  return photoDescriptions;
 }
 
-//Создание массива объектов - описаний к фотографиям
-const similarDescriptionPhoto = new Array(SIMILAR_DESCRIPTION_PHOTO).fill(null).map((_, i) => createDescriptionPhoto(i));
-
-similarDescriptionPhoto();
+getPhotoDescriptions(25);
