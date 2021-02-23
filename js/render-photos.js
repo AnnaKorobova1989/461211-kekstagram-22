@@ -6,17 +6,17 @@ const templatePicture = document.querySelector('#picture').content.querySelector
 const similarPhotos = getPhotoDescriptions(25);
 const similarPhotoFragment = document.createDocumentFragment();
 
-const picturesContent = () => {
+const drawPhotos = () => {
   similarPhotos.forEach(({url, comments, likes}) => {
     const photoElement = templatePicture.cloneNode(true);
     photoElement.querySelector('img').src = url;
-    photoElement.querySelector('.picture__comments').textContent = comments;
+    photoElement.querySelector('.picture__comments').textContent = comments.length;
     photoElement.querySelector('.picture__likes').textContent = likes;
     similarPhotoFragment.appendChild(photoElement);
     return similarPhotoFragment;
   })
 }
 
-picturesContent();
+drawPhotos();
 
 similarPhotoElement.appendChild(similarPhotoFragment);
