@@ -1,4 +1,5 @@
 import {getRandomIntInclusive, getRandomArrayElement} from './util.js';
+export {getPhotoDescriptions};
 
 //Массив имен
 const NAMES = [
@@ -72,4 +73,3 @@ const getPhotoDescriptions = function(quantityObjects) {
 }
   
 getPhotoDescriptions(25);
-  
