@@ -1,5 +1,5 @@
 import {getRandomIntInclusive, getRandomArrayElement} from './util.js';
-export {getPhotoDescriptions};
+export {getComments, getPhotoDescriptions};
 
 //Массив имен
 const NAMES = [

@@ -1,8 +1,7 @@
-import {getPhotoDescriptions} from './data.js';
+import {getComments, getPhotoDescriptions} from './data.js';
 
 const similarPhotoElement = document.querySelector('.pictures');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
-
 const similarPhotos = getPhotoDescriptions(25);
 const similarPhotoFragment = document.createDocumentFragment();
 
@@ -20,3 +19,30 @@ const drawPhotos = () => {
 drawPhotos();
 
 similarPhotoElement.appendChild(similarPhotoFragment);
+
+
+//big picture
+const bigPicture = document.querySelector('.big-picture');
+const closeBtn = bigPicture.querySelector('.big-picture__cancel');
+const similarComments = getComments();
+
+similarPhotoElement.addEventListener('click', function(evt) {
+  evt.preventDefault();
+  bigPicture.classList.remove('hidden');
+});
+
+closeBtn.addEventListener('click', function() {
+  bigPicture.classList.add('hidden');
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.key === ('Escape' || 'Esc')) {
+    bigPicture.classList.add('hidden');
+  }
+});
+
+const descriptionBigPhoto = similarPhotoElement.querySelector('.social__caption');
+descriptionBigPhoto = createDescriptionPhoto.description;
+
+
+
