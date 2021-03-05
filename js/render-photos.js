@@ -1,5 +1,7 @@
-import {getComments, getPhotoDescriptions} from './data.js';
-import { getRandomIntInclusive } from './util.js';
+import {getPhotoDescriptions} from './data.js';
+export {similarPhotoElement};
+
+//import { getRandomIntInclusive } from './util.js';
 
 const similarPhotoElement = document.querySelector('.pictures');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
