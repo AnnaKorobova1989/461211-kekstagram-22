@@ -2,8 +2,6 @@ import {getPhotoDescriptions} from './data.js';
 import {createBigPhoto} from './big-photo.js';
 export {similarPhotoElement};
 
-//import { getRandomIntInclusive } from './util.js';
-
 const similarPhotoElement = document.querySelector('.pictures');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 const similarPhotos = getPhotoDescriptions(25);
@@ -32,5 +30,3 @@ const drawPhotos = () => {
 }
 
 drawPhotos();
-
-
