@@ -50,7 +50,7 @@ export const createBigPhoto = function({url, likes, description, comments}) {
   openModal();
 }
 
-const fillComments = function (comments) {
+const fillComments = function(comments) {
   commentsList.textContent = ''; //очищаем содержимое
   commentsList.appendChild(createComments(comments));//наполняем картинкой и текстом
 };
@@ -77,7 +77,7 @@ const createComment = function (comment) {
   socialImg.setAttribute('src', comment.avatar);
   socialImg.setAttribute('alt', comment.name);
   socialText.textContent = comment.message;
-  //вернуть элумент с наполненными данными
+  //вернуть элемент с наполненными данными
 
   return element;
 };
