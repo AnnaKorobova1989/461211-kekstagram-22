@@ -1,12 +1,14 @@
+import {isEscEvent} from './util.js';
+
 const STEP_SIZE_PHOTO = 25;
 const MIN_PHOTO_SIZE = 25;
 const MAX_PHOTO_SIZE =100;
 
 const imgEdit = document.querySelector('.img-upload__overlay');
 const closeBtn = document.querySelector('#upload-cancel');
-const downloadButton = document.querySelector('.img-upload__input');
+const uploadButton = document.querySelector('.img-upload__input');
 
-const photoSizeButton = document.querySelector('.img-upload__scale');
+const imgUploadScale = document.querySelector('.img-upload__scale');
 const controlValue = document.querySelector('.scale__control--value');
 const photoPreview = document.querySelector('.img-upload__preview').querySelector('img');
 
@@ -85,7 +87,57 @@ const SLIDER_OPTIONS = {
   },
 };
 
-downloadButton.addEventListener('change', () => {
+const resetScale = function(){
+  controlValue.value =`${MAX_PHOTO_SIZE}%`;
+  photoPreview.style.transform = 'none';
+}
+
+const resetSlider = function() {
+  resetScale();
+  photoPreview.style.filter = 'none';
+}
+
+uploadButton.addEventListener('change', () => {
+  window.noUiSlider.create(slider, {
+    range: {
+      min: 0,
+      max: 100,
+    },
+    start: 80,
+    step: 1,
+    connect: 'lower',
+    format: {
+      to: function (value) {
+        if (Number.isInteger(value)) {
+          return value.toFixed(0);
+        }
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      },
+    },
+  });
+
+  effectList.addEventListener('click', (evt) => {
+    if (evt.target.tagName === 'SPAN') {
+      const className = evt.target.classList[1];
+      const modifier = className.split('--')[1];
+      const isModifierNone = modifier === 'none';
+      const filter = SLIDER_OPTIONS[modifier];
+    
+      photoPreview.className = '';
+      photoPreview.classList.add(className);
+      isModifierNone ? effectLevel.classList.add('hidden') : effectLevel.classList.remove('hidden');
+    
+      slider.noUiSlider.updateOptions(filter.options);
+    
+      slider.noUiSlider.on('update', (values, handle) => {
+        effectLevelValue.value = values[handle];
+        photoPreview.style.filter =`${filter.effect}` + (isModifierNone ? '' : `(${effectLevelValue.value}${filter.measurement})`);
+      })
+    }
+  });
   openModal();
 });
 
@@ -103,10 +155,13 @@ const closeModal = function() {
 
   closeBtn.removeEventListener('click', closeModal);
   document.removeEventListener('keydown', onEscapeKayDown);
+
+  resetSlider();
+  slider.noUiSlider.destroy();
 }
 
 const onEscapeKayDown = function (evt) {
-  if (evt.key === ('Escape' || 'Esc')) {
+  if(isEscEvent(evt)) {
     closeModal();
   }
 }
@@ -130,54 +185,12 @@ const increasesSizeImg = () => {
   controlValue.value = `${photoSize}%`;
 }
   
-photoSizeButton.addEventListener('click', (evt) => {
+imgUploadScale.addEventListener('click', (evt) => {
   const className = evt.target.classList[1];
   if (className === 'scale__control--smaller') {
     reducesSizeImg()
   }
   if (className === 'scale__control--bigger') {
     increasesSizeImg()
-  }
-});
-  
-//Эффекты для изображения
-noUiSlider.create(slider, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 80,
-  step: 1,
-  connect: 'lower',
-  format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
-  },
-});
-  
-effectList.addEventListener('click', (evt) => {
-  if (evt.target.tagName === 'SPAN') {
-    const className = evt.target.classList[1];
-    const modifier = className.split('--')[1];
-    const isModifierNone = modifier === 'none';
-    const filter = SLIDER_OPTIONS[modifier];
-  
-    photoPreview.className = '';
-    photoPreview.classList.add(className);
-    isModifierNone ? effectLevel.classList.add('hidden') : effectLevel.classList.remove('hidden');
-  
-    slider.noUiSlider.updateOptions(filter.options);
-  
-    slider.noUiSlider.on('update', (values, handle) => {
-      effectLevelValue.value = values[handle];
-      photoPreview.style.filter =`${filter.effect}` + (isModifierNone ? '' : `(${effectLevelValue.value}${filter.measurement})`);
-    })
   }
 });

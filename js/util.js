@@ -1,4 +1,4 @@
-export {getRandomIntInclusive, getRandomArrayElement};
+export {getRandomIntInclusive, getRandomArrayElement, isEscEvent};
 
 //Вспом. функция - сверяет длину строки с максимально возможным значением
 /*let getStrMaxLength = function (str, strMaxLength) {
@@ -32,4 +32,8 @@ return j;
 const getRandomArrayElement = (elements) => {
   return elements[getRandomIntInclusive(0, elements.length-1)];
 }
+
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
   

@@ -1,3 +1,5 @@
+import {isEscEvent} from './util.js';
+
 const socialCaption = document.querySelector('.social__caption');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsList = document.querySelector('.social__comments');
@@ -16,7 +18,7 @@ const commentsLoader = document.querySelector('.comments-loader');
 
 //обработчик клика по клаве
 const onEscapeKayDown = function (evt) {
-  if (evt.key === ('Escape' || 'Esc')) {
+  if(isEscEvent(evt)){
     closeModal();
   }
 }
