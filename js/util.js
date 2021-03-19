@@ -1,4 +1,4 @@
-export {getRandomIntInclusive, getRandomArrayElement, isEscEvent};
+export {getRandomIntInclusive, getRandomArrayElement, isEscEvent, onCancelEscKeydown};
 
 //Вспом. функция - сверяет длину строки с максимально возможным значением
 /*let getStrMaxLength = function (str, strMaxLength) {
@@ -35,5 +35,11 @@ const getRandomArrayElement = (elements) => {
 
 const isEscEvent = (evt) => {
   return evt.key === ('Escape' || 'Esc');
+};
+
+const onCancelEscKeydown = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.stopPropagation();
+  }
 };
   
