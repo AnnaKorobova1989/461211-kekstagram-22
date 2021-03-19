@@ -9,24 +9,26 @@ const MAX_HASHTAG_LENGTH = 20;
 const MAX_COMMENT_LENGTH = 140;
 
 const checkDuplicateHashTag = (hashTags) => {
+  let hasDuplicate = false;
   const checkHashTags = [];
 
   hashTags.forEach((hashTag) => {
     if (checkHashTags.includes(hashTag)) {
-        return true;
+        hasDuplicate = true;
+        return;
     }
 
     checkHashTags.push(hashTag);
   })
 
-  return false;
+  return hasDuplicate;
 }
 
 const onHashTagValidation = () => {
   let hashTagValue = textHashTagsInput.value;
   const hashTags = hashTagValue.trim().toLowerCase().split(' ');
 
-      hashTags.forEach(hashtag => {
+  hashTags.forEach(hashtag => {
       if (hashTags.length > MAX_HASHTAG_COUNT) {
         textHashTagsInput.setCustomValidity('Количество хэш-тегов не может быть больше' + MAX_HASHTAG_COUNT);
       }
@@ -49,7 +51,7 @@ const onHashTagValidation = () => {
 }
 
 const onCommentValidation = () => {
-  const descriptionValue = description.value;
+  const descriptionValue = descriptionElement.value;
 
   if (descriptionValue.length > MAX_COMMENT_LENGTH) {
     descriptionElement.setCustomValidity('Длина комментария не может превышать' + MAX_COMMENT_LENGTH + ' символов');
