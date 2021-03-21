@@ -1,7 +1,10 @@
-import {onCancelEscKeydown} from './util.js';
+import {onCancelEscKeydown, onMessageSuccess, onMessageError} from './util.js';
 
-const textHashTagsInput = document.querySelector('.text__hashtags');
-const descriptionElement = document.querySelector('.text__description');
+
+const sendPhotoForm = document.querySelector('.img-upload__form');
+
+const textHashTagsInput = sendPhotoForm.querySelector('.text__hashtags');
+const descriptionElement = sendPhotoForm.querySelector('.text__description');
 
 const MAX_HASHTAG_COUNT = 5;
 const MIN_HASHTAG_SIMBOL = 2;
@@ -93,3 +96,31 @@ const validateForm = () => {
 }
 
 validateForm();
+
+
+export const setUserFormSubmit = (onSuccess) => {
+    sendPhotoForm.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+  
+      const formData = new FormData(evt.target);
+  
+      fetch(
+        'https://22.javascript.pages.academy/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
+        .then((response) => {
+          if (response.ok) {
+            onSuccess();
+            onMessageSuccess();
+          } else {
+            onMessageError();
+          }
+        })
+        .catch(() => {
+          onMessageError();
+        });
+    });
+  };

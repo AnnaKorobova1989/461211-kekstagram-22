@@ -1,10 +1,8 @@
-//import {getPhotoDescriptions} from './data.js';
 import {createBigPhoto} from './big-photo.js';
 export {similarPhotoElement};
 
 const similarPhotoElement = document.querySelector('.pictures');
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
-//const similarPhotos = getPhotoDescriptions(25);
 
 export const drawPhotos = (similarPhotos) => {
   const similarPhotoFragment = document.createDocumentFragment();
@@ -28,5 +26,3 @@ export const drawPhotos = (similarPhotos) => {
 
   similarPhotoElement.appendChild(similarPhotoFragment);
 }
-
-//drawPhotos();
