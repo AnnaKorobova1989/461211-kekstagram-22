@@ -1,4 +1,7 @@
-import {onCancelEscKeydown, onMessageSuccess, onMessageError} from './util.js';
+import {sendData} from './api.js';
+import {onCancelEscKeydown} from './util.js';
+import {closeModal} from './img-upload.js';
+import {onMessageSuccess, onMessageError} from './messages.js';
 
 
 const sendPhotoForm = document.querySelector('.img-upload__form');
@@ -90,37 +93,20 @@ const validateComment = () => {
   });
 }
 
-const validateForm = () => {
+export const listernFormSubmit = () => {
+  sendPhotoForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const formData = new FormData(evt.target);
+    sendData(() => {
+      onMessageSuccess();
+      closeModal();
+    }, onMessageError, formData);
+  });
+};
+
+export const initializeForm = () => {
   validateHashTags();
   validateComment();
+  listernFormSubmit();
 }
-
-validateForm();
-
-
-export const setUserFormSubmit = (onSuccess) => {
-    sendPhotoForm.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-  
-      const formData = new FormData(evt.target);
-  
-      fetch(
-        'https://22.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      )
-        .then((response) => {
-          if (response.ok) {
-            onSuccess();
-            onMessageSuccess();
-          } else {
-            onMessageError();
-          }
-        })
-        .catch(() => {
-          onMessageError();
-        });
-    });
-  };

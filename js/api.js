@@ -1,27 +1,43 @@
-import {drawPhotos} from './render-photos.js';
-import {showAlert} from './util.js';
-import {closeModal} from './img-upload.js';
-import {setUserFormSubmit} from './validation-form.js'
 
+const API_URL = 'https://22.javascript.pages.academy/kekstagram';
 
-export const getData = () => {
-  return fetch('https://22.javascript.pages.academy/kekstagram/data')
+export const getData = (onSuccsess, onError) => {
+  return fetch(`${API_URL}/data`)
     .then((response) => {
-        if (response.ok) {
-            return response.json();
-        }
+      if (response.ok) {
+        return response.json();
+      }
 
-    throw new Error(`${response.status} ${response.statusText}`);
+      throw new Error(`${response.status} ${response.statusText}`);
 
     })
-      .then((pictures) => {
-        drawPhotos(pictures);
-  })
-      .catch((err) => {
-          showAlert('Не удалось загрузить данные с сервера. Попробуйте перезагрузить страницу');
-      })
+    .then((data) => {
+      onSuccsess(data);
+    })
+    .catch((err) => {
+      onError(err);
+    })
 }
 
-getData();
 
-setUserFormSubmit(closeModal);
+export const sendData = (onSuccess, onError, body) => {
+  fetch(
+    API_URL,
+    {
+      method: 'POST',
+      body,
+    },
+  )
+    .then((response) => {
+      if (response.ok) {
+        onSuccess();
+      } else {
+
+        throw new Error(`${response.status} ${response.statusText}`);
+
+      }
+    })
+    .catch((err) => {
+      onError(err);
+    });
+};
