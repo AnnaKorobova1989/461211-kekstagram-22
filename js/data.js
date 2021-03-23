@@ -73,3 +73,4 @@ const getPhotoDescriptions = function(quantityObjects) {
 }
   
 getPhotoDescriptions(25);
+

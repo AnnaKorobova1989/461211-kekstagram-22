@@ -1,7 +1,13 @@
+import {sendData} from './api.js';
 import {onCancelEscKeydown} from './util.js';
+import {closeModal} from './img-upload.js';
+import {onMessageSuccess, onMessageError} from './messages.js';
 
-const textHashTagsInput = document.querySelector('.text__hashtags');
-const descriptionElement = document.querySelector('.text__description');
+
+const sendPhotoForm = document.querySelector('.img-upload__form');
+
+const textHashTagsInput = sendPhotoForm.querySelector('.text__hashtags');
+const descriptionElement = sendPhotoForm.querySelector('.text__description');
 
 const MAX_HASHTAG_COUNT = 5;
 const MIN_HASHTAG_SIMBOL = 2;
@@ -87,9 +93,20 @@ const validateComment = () => {
   });
 }
 
-const validateForm = () => {
+export const listernFormSubmit = () => {
+  sendPhotoForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const formData = new FormData(evt.target);
+    sendData(() => {
+      onMessageSuccess();
+      closeModal();
+    }, onMessageError, formData);
+  });
+};
+
+export const initializeForm = () => {
   validateHashTags();
   validateComment();
+  listernFormSubmit();
 }
-
-validateForm();

@@ -149,7 +149,7 @@ const openModal = function() {
   document.addEventListener('keydown', onEscapeKayDown);
 };
 
-const closeModal = function() {
+export const closeModal = function() {
   imgEdit.classList.add('hidden');
   document.body.classList.remove('modal-open');
 

@@ -1,9 +1,9 @@
-export {getRandomIntInclusive, getRandomArrayElement, isEscEvent, onCancelEscKeydown};
-
-//Вспом. функция - сверяет длину строки с максимально возможным значением
-/*let getStrMaxLength = function (str, strMaxLength) {
-  return str.length <= strMaxLength;
-}*/
+export {
+  getRandomIntInclusive,
+  getRandomArrayElement,
+  isEscEvent,
+  onCancelEscKeydown
+};
 
 //Вспом. функция - возвращает случайное целое число из заданного диапазона
 const getRandomIntInclusive = function(min, max) {
@@ -15,19 +15,6 @@ const getRandomIntInclusive = function(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-  
-//Вспом. функция, возвращающая массив чисел, перемешанных случайным образом
-/*const randomIntNonRepeat = function(int) {
-let arr = [];
-j = 1;
-for (let i = 1; i <= int; i++) {
-arr.push(j++);
-}
-arr.sort(function(){
-return Math.random() - 0.5;
-});
-return j;
-}*/
   
 const getRandomArrayElement = (elements) => {
   return elements[getRandomIntInclusive(0, elements.length-1)];
@@ -42,4 +29,22 @@ const onCancelEscKeydown = (evt) => {
     evt.stopPropagation();
   }
 };
-  
+
+//Вспом. функция - сверяет длину строки с максимально возможным значением
+/*let getStrMaxLength = function (str, strMaxLength) {
+  return str.length <= strMaxLength;
+}*/
+
+
+//Вспом. функция, возвращающая массив чисел, перемешанных случайным образом
+/*const randomIntNonRepeat = function(int) {
+let arr = [];
+j = 1;
+for (let i = 1; i <= int; i++) {
+arr.push(j++);
+}
+arr.sort(function(){
+return Math.random() - 0.5;
+});
+return j;
+}*/
