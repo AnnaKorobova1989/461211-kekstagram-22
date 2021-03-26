@@ -37,14 +37,14 @@ const onCancelEscKeydown = (evt) => {
 
 
 //Вспом. функция, возвращающая массив чисел, перемешанных случайным образом
-/*const randomIntNonRepeat = function(int) {
-let arr = [];
-j = 1;
-for (let i = 1; i <= int; i++) {
-arr.push(j++);
+export const randomIntNonRepeat = function(int) {
+  let arr = [];
+  let j = 0;
+  for (let i = 0; i <= int; i++) {
+    arr.push(j++);
+  }
+  arr.sort(function(){
+    return Math.random() - 0.5;
+  });
+  return arr;
 }
-arr.sort(function(){
-return Math.random() - 0.5;
-});
-return j;
-}*/
