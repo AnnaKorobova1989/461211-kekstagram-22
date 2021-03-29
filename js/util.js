@@ -1,24 +1,7 @@
 export {
-  getRandomIntInclusive,
-  getRandomArrayElement,
   isEscEvent,
   onCancelEscKeydown
 };
-
-//Вспом. функция - возвращает случайное целое число из заданного диапазона
-const getRandomIntInclusive = function(min, max) {
-  if (min >= max) {
-    alert('Задан неверный диапазон');
-    return;
-  }
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-  
-const getRandomArrayElement = (elements) => {
-  return elements[getRandomIntInclusive(0, elements.length-1)];
-}
 
 const isEscEvent = (evt) => {
   return evt.key === ('Escape' || 'Esc');
