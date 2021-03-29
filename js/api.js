@@ -1,4 +1,3 @@
-
 const API_URL = 'https://22.javascript.pages.academy/kekstagram';
 
 export const getData = (onSuccsess, onError) => {
