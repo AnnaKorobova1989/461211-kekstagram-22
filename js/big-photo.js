@@ -15,7 +15,7 @@ const body = document.querySelector('body');
 const commentsLoader = document.querySelector('.comments-loader');
 
 let VISIBLE_COMMENTS_LENGTH = 5;
-let start = 0;
+let commentsLength = 0;
 
 //обработчик клика по клаве
 const onEscapeKayDown = function (evt) {
@@ -43,29 +43,31 @@ const closeModal = function() {
 };
 
 const renderComments = (comments) => {
-  let i = start;
-  while (i < start + 5 && i < comments.length) {
+  let i = commentsLength;
+
+  while (i < commentsLength + VISIBLE_COMMENTS_LENGTH && i < comments.length) {
     commentsList.appendChild(createComment(comments[i]));
     i++;
   }
-  start += 5;
-  if (start >= comments.length) {
+
+  commentsLength += VISIBLE_COMMENTS_LENGTH;
+
+  if (commentsLength >= comments.length) {
     socialCommentCount.childNodes[0].textContent = `${comments.length} из `;
     commentsLoader.classList.add('hidden');
   } else {
-    socialCommentCount.childNodes[0].textContent = `${start} из `;
+    socialCommentCount.childNodes[0].textContent = `${commentsLength} из `;
   }
-
 }
 
 const showVisibleComments = () => {
   const comments = document.querySelectorAll('.social__comment');
+
   if (comments.length > VISIBLE_COMMENTS_LENGTH) {
     comments.forEach((comment, index) => {
       if (index >= VISIBLE_COMMENTS_LENGTH) {
         comment.classList.add('hidden');
-      }
-      else {
+      } else {
         comment.classList.remove('hidden');
       }
     })
@@ -79,11 +81,14 @@ export const createBigPhoto = function({url, likes, description, comments}) {
   socialCaption.textContent = description;
   commentsCount.textContent = comments.length;
 
-  start = 0;
+  commentsLength = 0;
+
   if (comments.length > VISIBLE_COMMENTS_LENGTH) {
     commentsLoader.classList.remove('hidden');
   }
+
   renderComments(comments);
+  
   commentsLoader.onclick = () => {
     renderComments(comments);
   }

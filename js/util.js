@@ -30,21 +30,18 @@ const onCancelEscKeydown = (evt) => {
   }
 };
 
-//Вспом. функция - сверяет длину строки с максимально возможным значением
-/*let getStrMaxLength = function (str, strMaxLength) {
-  return str.length <= strMaxLength;
-}*/
-
-
 //Вспом. функция, возвращающая массив чисел, перемешанных случайным образом
 export const randomIntNonRepeat = function(int) {
   let arr = [];
   let j = 0;
+
   for (let i = 0; i <= int; i++) {
     arr.push(j++);
   }
+
   arr.sort(function(){
     return Math.random() - 0.5;
   });
+
   return arr;
 }
