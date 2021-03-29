@@ -129,4 +129,3 @@ const createComment = function (comment) {
 
   return element;
 };
-
