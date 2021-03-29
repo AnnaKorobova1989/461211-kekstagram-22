@@ -6,9 +6,7 @@ export const getData = (onSuccsess, onError) => {
       if (response.ok) {
         return response.json();
       }
-
       throw new Error(`${response.status} ${response.statusText}`);
-
     })
     .then((data) => {
       onSuccsess(data);
@@ -31,9 +29,7 @@ export const sendData = (onSuccess, onError, body) => {
       if (response.ok) {
         onSuccess();
       } else {
-
         throw new Error(`${response.status} ${response.statusText}`);
-
       }
     })
     .catch((err) => {

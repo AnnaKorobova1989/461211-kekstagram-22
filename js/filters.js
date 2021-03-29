@@ -12,19 +12,22 @@ const removePicture = () => document.querySelectorAll('.picture').forEach(elemen
 const getRandomPicture = randomIntNonRepeat(24);
 
 //отрисовка 10 случайных неповторяющихся фотографий
-export const getNotRepeatPicture = function(data){
-  const b = [];
+export const getNotRepeatPicture = function(data, maxCount){
+  const filteredPictures = [];
+
   for (let i = 0; i < getRandomPicture.length; i++) {
     const newElement = data[getRandomPicture[i]];
-    b.push(newElement);
+    filteredPictures.push(newElement);
   }
-  return b.slice(0,10);
+
+  return filteredPictures.slice(0, maxCount);
 }
 
 // Сортировка фотографий в порядке убывания количества комментариев
 export const sortPicturesByComment = (pictureA, pictureB) => {
   const commentA = pictureA.comments.length;
   const commentB = pictureB.comments.length;
+
   return commentB - commentA;
 }
 
@@ -35,7 +38,6 @@ export const getSortedPicturesByComment = (data) => {
 
 export const setFilterRandomPicture = (cb) => {
   filterRandom.addEventListener('click', () => {
-    //filterRandom.classList.add('img-filters__button--active');
     cb();
   });
 }
@@ -52,13 +54,16 @@ export const setFilterDefaultPicture = (cb) => {
   });
 }
 
+const setActiveClass = () => {
+  for (let i = 0; i < imgFiltersButtons.length; i++) {
+    imgFiltersButtons[i].addEventListener('click', function() {
+      const activeButton = document.querySelector('.img-filters__button--active');
+      
+      removePicture();
+      activeButton.classList.remove('img-filters__button--active');
+      imgFiltersButtons[i].classList.add('img-filters__button--active');
+    })
+  }
+};
 
-for (let i = 0; i < imgFiltersButtons.length; i++) {
-  imgFiltersButtons[i].addEventListener('click', function() {
-    removePicture();
-    const activeButton = document.querySelector('.img-filters__button--active');
-    activeButton.classList.remove('img-filters__button--active');
-    imgFiltersButtons[i].classList.add('img-filters__button--active');
-  })
-}
-
+setActiveClass();
