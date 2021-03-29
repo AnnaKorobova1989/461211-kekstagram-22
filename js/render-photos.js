@@ -7,7 +7,8 @@ const templatePicture = document.querySelector('#picture').content.querySelector
 export const drawPhotos = (similarPhotos) => {
   const similarPhotoFragment = document.createDocumentFragment();
 
-  similarPhotos.forEach((data) => {
+  similarPhotos
+  .forEach((data) => {
     const {url, comments, likes} = data;
     const photoElement = templatePicture.cloneNode(true);
 

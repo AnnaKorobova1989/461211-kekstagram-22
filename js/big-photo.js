@@ -14,7 +14,8 @@ const commentsCount = document.querySelector('.comments-count');
 const body = document.querySelector('body');
 const commentsLoader = document.querySelector('.comments-loader');
 
-
+let VISIBLE_COMMENTS_LENGTH = 5;
+let start = 0;
 
 //обработчик клика по клаве
 const onEscapeKayDown = function (evt) {
@@ -25,9 +26,9 @@ const onEscapeKayDown = function (evt) {
 
 const openModal = function() {
   bigPicture.classList.remove('hidden');
-  socialCommentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
+
+  showVisibleComments();
 
   closeBtn.addEventListener('click', closeModal);
   document.addEventListener('keydown', onEscapeKayDown);
@@ -41,13 +42,52 @@ const closeModal = function() {
   document.removeEventListener('click', onEscapeKayDown);
 };
 
+const renderComments = (comments) => {
+  let i = start;
+  while (i < start + 5 && i < comments.length) {
+    commentsList.appendChild(createComment(comments[i]));
+    i++;
+  }
+  start += 5;
+  if (start >= comments.length) {
+    socialCommentCount.childNodes[0].textContent = `${comments.length} из `;
+    commentsLoader.classList.add('hidden');
+  } else {
+    socialCommentCount.childNodes[0].textContent = `${start} из `;
+  }
+
+}
+
+const showVisibleComments = () => {
+  const comments = document.querySelectorAll('.social__comment');
+  if (comments.length > VISIBLE_COMMENTS_LENGTH) {
+    comments.forEach((comment, index) => {
+      if (index >= VISIBLE_COMMENTS_LENGTH) {
+        comment.classList.add('hidden');
+      }
+      else {
+        comment.classList.remove('hidden');
+      }
+    })
+  }
+};
+
 //начальная функция, чтобы наполнить шаблон данными
 export const createBigPhoto = function({url, likes, description, comments}) {
   bigPictureImg.src = url;
   likesCount.textContent = likes;
   socialCaption.textContent = description;
-  commentsCount.textContent = createComments.length;
-  
+  commentsCount.textContent = comments.length;
+
+  start = 0;
+  if (comments.length > VISIBLE_COMMENTS_LENGTH) {
+    commentsLoader.classList.remove('hidden');
+  }
+  renderComments(comments);
+  commentsLoader.onclick = () => {
+    renderComments(comments);
+  }
+
   fillComments(comments);
   openModal();
 }
@@ -79,7 +119,9 @@ const createComment = function (comment) {
   socialImg.setAttribute('src', comment.avatar);
   socialImg.setAttribute('alt', comment.name);
   socialText.textContent = comment.message;
+
   //вернуть элемент с наполненными данными
 
   return element;
 };
+
